@@ -11,7 +11,7 @@ import Link from "next/link";
 import React, { useRef, useState } from "react";
 import { Button } from "./button";
 import { Logo } from "./logo";
-// import { ModeToggle } from "./mode-toggle";
+import { ModeToggle } from "./mode-toggle";
 import { useCalEmbed } from "@/app/hooks/useCalEmbed";
 import { CONSTANTS } from "@/constants/links";
 
@@ -30,8 +30,8 @@ export const Navbar = () => {
       link: "/#features",
     },
     {
-      name: "Pricing",
-      link: "/#pricing",
+      name: "FAQ",
+      link: "/#FAQ",
     },
     {
       name: "Contact",
@@ -65,17 +65,6 @@ export const Navbar = () => {
 const DesktopNav = ({ navItems, visible }: NavbarProps) => {
   const [hovered, setHovered] = useState<number | null>(null);
 
-  const calOptions = useCalEmbed({
-    namespace: CONSTANTS.CALCOM_NAMESPACE,
-    styles: {
-      branding: {
-        brandColor: CONSTANTS.CALCOM_BRAND_COLOR,
-      },
-    },
-    hideEventTypeDetails: CONSTANTS.CALCOM_HIDE_EVENT_TYPE_DETAILS,
-    layout: CONSTANTS.CALCOM_LAYOUT,
-  });
-
   return (
     <motion.div
       onMouseLeave={() => {
@@ -99,7 +88,7 @@ const DesktopNav = ({ navItems, visible }: NavbarProps) => {
       }}
       className={cn(
         "hidden lg:flex flex-row  self-start bg-transparent dark:bg-transparent items-center justify-between py-2 max-w-7xl mx-auto px-4 rounded-full relative z-[60] w-full",
-        visible && "bg-white/80 dark:bg-neutral-950/80"
+        visible && "bg-white/80 dark:bg-neutral-950/80",
       )}
     >
       <Logo />
@@ -122,7 +111,7 @@ const DesktopNav = ({ navItems, visible }: NavbarProps) => {
         ))}
       </motion.div>
       <div className="flex items-center gap-4">
-        {/* <ModeToggle /> */}
+        <ModeToggle />
 
         <AnimatePresence mode="popLayout" initial={false}>
           {!visible && (
@@ -144,26 +133,19 @@ const DesktopNav = ({ navItems, visible }: NavbarProps) => {
                 ease: "easeOut",
               }}
             >
-              <Button
+              {/* <Button
                 as={Link}
                 href={CONSTANTS.LOGIN_LINK}
                 variant="secondary"
                 className="hidden md:block "
               >
                 Login
-              </Button>
+              </Button> */}
             </motion.div>
           )}
         </AnimatePresence>
-        <Button
-          data-cal-namespace={calOptions.namespace}
-          data-cal-link={CONSTANTS.CALCOM_LINK}
-          data-cal-config={`{"layout":"${calOptions.layout}"}`}
-          as="button"
-          variant="primary"
-          className="hidden md:block "
-        >
-          Book a call
+        <Button href="#contact" variant="primary" className="hidden md:block ">
+          Join waitlist
         </Button>
       </div>
     </motion.div>
@@ -172,17 +154,6 @@ const DesktopNav = ({ navItems, visible }: NavbarProps) => {
 
 const MobileNav = ({ navItems, visible }: NavbarProps) => {
   const [open, setOpen] = useState(false);
-
-  const calOptions = useCalEmbed({
-    namespace: "chat-with-manu-demo",
-    styles: {
-      branding: {
-        brandColor: "#000000",
-      },
-    },
-    hideEventTypeDetails: false,
-    layout: "month_view",
-  });
 
   return (
     <>
@@ -205,7 +176,7 @@ const MobileNav = ({ navItems, visible }: NavbarProps) => {
         }}
         className={cn(
           "flex relative flex-col lg:hidden w-full justify-between items-center bg-transparent   max-w-[calc(100vw-2rem)] mx-auto px-0 py-2 z-50",
-          visible && "bg-white/80 dark:bg-neutral-950/80"
+          visible && "bg-white/80 dark:bg-neutral-950/80",
         )}
       >
         <div className="flex flex-row justify-between items-center w-full">
@@ -243,7 +214,7 @@ const MobileNav = ({ navItems, visible }: NavbarProps) => {
                   <motion.span className="block">{navItem.name} </motion.span>
                 </Link>
               ))}
-              <Button
+              {/* <Button
                 as={Link}
                 onClick={() => setOpen(false)}
                 href={CONSTANTS.LOGIN_LINK}
@@ -251,17 +222,15 @@ const MobileNav = ({ navItems, visible }: NavbarProps) => {
                 className="block md:hidden w-full"
               >
                 Login
-              </Button>
+              </Button> */}
               <Button
-                data-cal-namespace={calOptions.namespace}
-                data-cal-link={`manu-arora-vesr9s/chat-with-manu-demo`}
-                data-cal-config={`{"layout":"${calOptions.layout}"}`}
-                as="button"
+                as={Link}
+                href="#contact"
                 onClick={() => setOpen(false)}
                 variant="primary"
                 className="block md:hidden w-full"
               >
-                Book a call
+                Join waitlist
               </Button>
             </motion.div>
           )}

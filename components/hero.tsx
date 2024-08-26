@@ -8,6 +8,7 @@ import Link from "next/link";
 import { Button } from "./button";
 import { useCalEmbed } from "@/app/hooks/useCalEmbed";
 import { CONSTANTS } from "@/constants/links";
+import { VideoModal } from "./video-modal";
 
 export function Hero() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -105,7 +106,8 @@ export function Hero() {
         transition={{ duration: 0.2, delay: 0.5 }}
         className="relative z-20 mx-auto mt-4 max-w-lg px-4 text-center text-base/6 text-gray-600 dark:text-gray-200"
       >
-        From English to automated tests in seconds. Catch bugs before they reach production.
+        From English to automated tests in seconds. Catch bugs before they reach
+        production.
       </motion.p>
       <motion.div
         initial={{ opacity: 0, y: 10 }}
@@ -115,14 +117,14 @@ export function Hero() {
       >
         <Button
           as={Link}
-          href="/login"
+          href="#contact"
           variant="dark"
           className="hidden md:block w-40 text-center"
         >
-          Create account
+          Join waitlist
         </Button>
 
-        <Button
+        {/* <Button
           data-cal-namespace={calOptions.namespace}
           data-cal-link={CONSTANTS.CALCOM_LINK}
           data-cal-config={`{"layout":"${calOptions.layout}"}`}
@@ -131,7 +133,7 @@ export function Hero() {
           className="hidden md:block w-40"
         >
           Book a call
-        </Button>
+        </Button> */}
       </motion.div>
       <motion.div
         initial={{ opacity: 0, y: 20 }}
@@ -140,7 +142,11 @@ export function Hero() {
         ref={containerRef}
         className="relative mx-auto max-w-7xl rounded-[32px] border border-neutral-200/50 bg-neutral-100 p-2 backdrop-blur-lg dark:border-neutral-700 dark:bg-neutral-800/50 md:p-4"
       >
-        <div className="rounded-[24px] border border-neutral-200 bg-white p-2 dark:border-neutral-700 dark:bg-black">
+        <div className="rounded-[24px] border border-neutral-200 bg-white p-2 dark:border-neutral-700 dark:bg-black cursor-pointer">
+          <div className="absolute h-40 w-full bottom-0 md:-bottom-10 inset-x-0 scale-[1.2] z-20 pointer-events-none bg-charcoal [mask-image:linear-gradient(to_top,white_30%,transparent)]" />
+          <div className="absolute inset-0 z-20  bg-transparent group-hover:bg-black/0 transition-all duration-200 flex items-center justify-center">
+            <VideoModal />
+          </div>
           <Image
             src={`/hero.jpg`}
             alt="header"
@@ -289,7 +295,7 @@ const CollisionMechanism = React.forwardRef<
         }}
         className={cn(
           "absolute left-96 top-20 m-auto h-14 w-px rounded-full bg-gradient-to-t from-orange-500 via-yellow-500 to-transparent",
-          beamOptions.className
+          beamOptions.className,
         )}
       />
       <AnimatePresence>
@@ -375,7 +381,7 @@ const GridLineVertical = ({
         "[mask-composite:exclude]",
         "z-30",
         "dark:bg-[linear-gradient(to_bottom,var(--color-dark),var(--color-dark)_50%,transparent_0,transparent)]",
-        className
+        className,
       )}
     ></div>
   );
