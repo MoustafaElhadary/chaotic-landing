@@ -1,10 +1,12 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { IconMailFilled } from "@tabler/icons-react";
 import { useId } from "react";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
 import { motion } from "framer-motion";
+import ReactConfetti from "react-confetti";
+import { useToast } from "@/components/ui/use-toast";
 
 export function ContactForm() {
   const [formData, setFormData] = useState({
@@ -24,6 +26,9 @@ export function ContactForm() {
     setFormData({ ...formData, [e.target.id]: e.target.value });
   };
 
+  const { toast } = useToast();
+  const [showConfetti, setShowConfetti] = useState(false);
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsSubmitting(true);
@@ -38,11 +43,31 @@ export function ContactForm() {
       if (response.ok) {
         setSubmitStatus("success");
         setFormData({ name: "", email: "", company: "", message: "" });
+        setShowConfetti(true);
+        toast({
+          title: "Success!",
+          description: "Your message has been sent successfully.",
+          duration: 5000,
+        });
+        setTimeout(() => setShowConfetti(false), 5000);
       } else {
         setSubmitStatus("error");
+        toast({
+          variant: "destructive",
+          title: "Uh oh! Something went wrong.",
+          description:
+            "There was a problem sending your message. Please try again.",
+          duration: 5000,
+        });
       }
     } catch (error) {
       setSubmitStatus("error");
+      toast({
+        variant: "destructive",
+        title: "Error",
+        description: "An unexpected error occurred. Please try again later.",
+        duration: 5000,
+      });
     }
     setIsSubmitting(false);
   };
@@ -52,6 +77,7 @@ export function ContactForm() {
       id="contact"
       className="mx-auto grid w-full max-w-7xl grid-cols-1 gap-10 px-4 py-10 md:px-6 md:py-20 lg:grid-cols-2"
     >
+      {showConfetti && <ReactConfetti recycle={false} numberOfPieces={200} />}
       <div className="relative flex flex-col items-center overflow-hidden lg:items-start">
         <div className="flex items-start justify-start">
           <FeatureIconContainer className="flex items-center justify-center overflow-hidden">
@@ -59,11 +85,11 @@ export function ContactForm() {
           </FeatureIconContainer>
         </div>
         <h2 className="mt-9 bg-gradient-to-b from-neutral-800 to-neutral-900 bg-clip-text text-left text-xl font-bold text-transparent dark:from-neutral-200 dark:to-neutral-300 md:text-3xl lg:text-5xl">
-          Contact us
+          Join the Waitlist
         </h2>
         <p className="mt-8 max-w-lg text-center text-base text-neutral-600 dark:text-neutral-400 md:text-left">
-          We are always looking for ways to improve our products and services.
-          Contact us and let us know how we can help you.
+          Be among the first to try our beta. Sign up now to get early access
+          and help shape the future of our product.
         </p>
 
         <div className="mt-10 hidden flex-col items-center gap-4 md:flex-row lg:flex">
@@ -159,11 +185,11 @@ export function ContactForm() {
             disabled={isSubmitting}
             className="relative z-10 flex items-center justify-center rounded-md border border-transparent bg-neutral-800 px-4 py-2 text-sm font-medium text-white shadow-[0px_1px_0px_0px_#FFFFFF20_inset] transition duration-200 hover:bg-neutral-900 md:text-sm disabled:opacity-50"
           >
-            {isSubmitting ? "Submitting..." : "Submit"}
+            {isSubmitting ? "Joining..." : "Join Waitlist"}
           </button>
           {submitStatus === "success" && (
             <p className="mt-2 text-sm text-green-600">
-              Message sent successfully!
+              You&apos;ve been added to the waitlist!
             </p>
           )}
           {submitStatus === "error" && (

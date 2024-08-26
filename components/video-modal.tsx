@@ -35,7 +35,7 @@ export function VideoModal() {
       </DialogTrigger>
       <DialogContent className="h-[50vh] w-[90vw] md:h-[90vh] md:w-[90vw]  max-w-none border-none">
         <ReactPlayer
-          url="https://www.youtube.com/watch?v=dC1yHLp9bWA" // Don't talk about it.
+          url="https://www.youtube.com/watch?v=dQw4w9WgXcQ"
           width="90%"
           height={isMobile ? "100%" : "100%"}
           style={{
