@@ -10,9 +10,9 @@ import { Toaster } from "@/components/ui/toaster";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Startup Landing | Aceternity Template",
+  title: "UseChaotic | QA Made Simple",
   description:
-    "Startup landing is a simple one page landing page for startups and agencies. Built with Next.js, Tailwind CSS, TypeScript and framer motion.",
+    "UseChaotic is a platform that makes QA easy and fun. Built with Next.js, Tailwind CSS, TypeScript and framer motion.",
 };
 
 export default function RootLayout({
